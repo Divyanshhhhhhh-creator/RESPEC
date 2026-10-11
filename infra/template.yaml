@@ -23,7 +23,7 @@ Conditions:
 
 Globals:
   Function:
-    Runtime: nodejs24.x
+    Runtime: nodejs22.x
     Architectures: [x86_64]
     MemorySize: 256
     Timeout: 30
@@ -83,7 +83,12 @@ Resources:
   ApiFunction:
     Type: AWS::Serverless::Function
     Metadata:
-      BuildMethod: makefile
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "node22"
+        EntryPoints:
+          - src/handlers/api.js
     Properties:
       CodeUri: ../api
       Handler: src/handlers/api.handler
@@ -115,7 +120,12 @@ Resources:
   StartPipelineFunction:
     Type: AWS::Serverless::Function
     Metadata:
-      BuildMethod: makefile
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "node22"
+        EntryPoints:
+          - src/handlers/startPipeline.js
     Properties:
       CodeUri: ../api
       Handler: src/handlers/startPipeline.handler
@@ -141,7 +151,12 @@ Resources:
   NormalizeFunction:
     Type: AWS::Serverless::Function
     Metadata:
-      BuildMethod: makefile
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "node22"
+        EntryPoints:
+          - src/handlers/normalize.js
     Properties:
       CodeUri: ../api
       Handler: src/handlers/normalize.handler
@@ -149,7 +164,12 @@ Resources:
   ClassifyFunction:
     Type: AWS::Serverless::Function
     Metadata:
-      BuildMethod: makefile
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "node22"
+        EntryPoints:
+          - src/handlers/classify.js
     Properties:
       CodeUri: ../api
       Handler: src/handlers/classify.handler
@@ -157,7 +177,12 @@ Resources:
   PersistFunction:
     Type: AWS::Serverless::Function
     Metadata:
-      BuildMethod: makefile
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "node22"
+        EntryPoints:
+          - src/handlers/persist.js
     Properties:
       CodeUri: ../api
       Handler: src/handlers/persist.handler
@@ -168,7 +193,12 @@ Resources:
   CollectTextractFunction:
     Type: AWS::Serverless::Function
     Metadata:
-      BuildMethod: makefile
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "node22"
+        EntryPoints:
+          - src/handlers/collectTextract.js
     Properties:
       CodeUri: ../api
       Handler: src/handlers/collectTextract.handler
@@ -196,7 +226,12 @@ Resources:
   MarkErrorFunction:
     Type: AWS::Serverless::Function
     Metadata:
-      BuildMethod: makefile
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: "node22"
+        EntryPoints:
+          - src/handlers/markError.js
     Properties:
       CodeUri: ../api
       Handler: src/handlers/markError.handler
