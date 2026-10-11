@@ -1,28 +1,25 @@
 # Implementation Status
 
-> Last updated: Oct 10, 2026. Owner: Divyansh.
+> Last updated: Oct 11, 2026. Owner: Divyansh.
 
 | Area | Current Status | Missing Work | Blocker | Priority |
 |---|---|---|---|---|
-| Repository & contracts | ✅ **Implemented** — Git init, monorepo structure, `/contracts/v1` types + Zod schemas, fixtures for all endpoints | Contract tests not yet run (install needed) | None | P0 |
-| Frontend S1–S6 | ❌ **Missing** — `/web` scaffold not yet created | React/Vite scaffold, all 6 screens, mock mode | Contracts must freeze first (done) | P1 |
-| Domain rules engine | 🟡 **Partial** — `data/rules.json` seeded with sourced rules; `data/conversions.json` and `data/facilities.json` seeded | `/core/normalize`, `/core/classify`, `/core/evaluate` — Riya's work | Riya needs contracts to start | P1 |
-| Compliance-gap calculator | ✅ **Implemented** — `/core/src/gap/computeGap.ts` with applicability, target schedule, denominator, numerator, missing factors, topLines | Unit tests written; need `npm install` to run | None | P0 done |
-| Ledger state machine | ✅ **Implemented** — `/core/src/ledger/ledger.ts` with all transition guards, 5% overrun, duplicate slip blocking, evidence-gated verifiedT | Unit tests written; need `npm install` to run | None | P0 done |
-| API & persistence | ❌ **Missing** — no Lambda handlers, no DynamoDB persistence | Bhavya's B1–B9 | Contracts frozen (unblocked) | P1 |
-| Textract & Step Functions | ❌ **Missing** — no SAM template, no state machine ASL | Bhavya's B1, B3 | AWS account & SAM setup | P1 |
-| AWS deployment | ❌ **Missing** — no `infra/` yet | SAM template, Amplify hosting | Bhavya | P1 |
-| Tests & evaluation | 🟡 **Partial** — unit tests written for gap (13 cases) and ledger (12+ cases); contract fixture tests scaffolded | Install + run tests; Riya's domain tests; integration tests | `npm install` needed | P0 |
-| Submission & demo | ❌ **Missing** — README skeleton created; video, write-up, submission not done | All | All above | P3 |
+| Repository & contracts | ✅ **Implemented** — Monorepo initialized, `/contracts` types + Zod schemas, fixtures for all endpoints | None | None | P0 done |
+| Frontend S1–S6 | ✅ **Implemented** — Aarvi's React/Vite app with all 6 screens, mock client, and design system integrated in `/web` | Production build verified (`vite build` exits 0) | None | P0 done |
+| Domain rules engine | ✅ **Implemented** — `/core/src/evaluate`, `/core/src/normalize`, `/core/src/classify`, sourced `rulesData`, `conversionsData`, `facilitiesData` | None | None | P0 done |
+| Compliance-gap calculator | ✅ **Implemented** — `/core/src/gap/computeGap.ts` with applicability, target schedule, denominator, numerator, missing factors, topLines | 25 unit tests green | None | P0 done |
+| Ledger state machine | ✅ **Implemented** — `/core/src/ledger/ledger.ts` with transition guards, 5% overrun, duplicate slip blocking, evidence-gated verifiedT | 18 unit tests green | None | P0 done |
+| API & persistence | ✅ **Implemented** — `/api` handlers for jobs, lines, evaluate, decisions, plan, deliveries, and DynamoDB store | End-to-end cloud invocation test | None | P1 |
+| Textract & Step Functions | ✅ **Implemented** — SAM template in `/infra/template.yaml`, Step Functions state machine, Textract collector | Real AWS account deploy | AWS credentials | P1 |
+| AWS deployment | 🟡 **Ready for Deploy** — SAM template validated, build scripts in root `package.json` | Run `sam deploy` with active credentials | AWS credentials | P1 |
+| Tests & evaluation | ✅ **Implemented** — 78 tests passing across monorepo (`web`: 15, `core`: 56, `api`: 4, `eval`: 3). FPR: 0.0% on negative controls | Continuous automated runs | None | P0 done |
+| Submission & demo | 🟡 **In Progress** — Monorepo unified on GitHub `main`; README complete; demo video and pitch deck remaining | 3-minute video recording, submission form | None | P0 |
 
-## Gate C1 Status
+## Gate Checkpoints Status
 
-| Criterion | Status |
-|---|---|
-| Repository structure agreed | ✅ Monorepo with `/web`, `/api`, `/core`, `/infra`, `/data`, `/eval`, `/contracts`, `/fixtures`, `/docs` |
-| API contracts and fixtures frozen | ✅ `/contracts/src/types.ts` + `schemas.ts`, fixtures for all endpoints |
-| All four workstreams can start independently | ✅ Unblocked |
-| Shared types compile | 🟡 Need `npm install` to verify |
-| Frontend runs in mock mode | ❌ `/web` not scaffolded yet |
-| Backend endpoints return fixture-shaped data | ❌ No Lambda handlers yet |
-| Core modules have agreed signatures | ✅ `computeGap`, `applyLedgerEvent`, `replayLedger` defined |
+| Gate | Description | Status |
+|---|---|---|
+| **Gate C1** — Contracts & Runnable Skeleton | All workspaces build and compile (`tsc`, `vite`). All shared contracts frozen. | ✅ **PASSED** |
+| **Gate C2** — Input & Extraction Pipeline | BOQ upload, normalization, classification, Textract pipeline configured in SAM. | ✅ **PASSED** |
+| **Gate C3** — Business Logic & Ledger | Human confirmation, compliance gap calculation, ledger state reducer, 0.0% FPR. | ✅ **PASSED** |
+| **Gate C4** — Submission & Demo Readiness | Unified clean repo, all 78 tests green, honest impact labels, ready for video recording. | 🟡 **IN PROGRESS** |
