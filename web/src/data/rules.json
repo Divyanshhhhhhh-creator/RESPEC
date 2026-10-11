@@ -1,0 +1,192 @@
+[
+  {
+    "id": "R-LEAN",
+    "category": "lean concrete (<M15)",
+    "condition": "Characteristic compressive strength < 15 N/mm2; non-structural lean concrete / PCC / mud mat",
+    "allowed_product": "Recycled Concrete Aggregate (RCA) & Recycled Aggregate (RA)",
+    "max_share": 100,
+    "basis": "mass",
+    "status": "ELIGIBLE",
+    "source_url": "https://civilapps.in/is-383-2016-table-1",
+    "clause": "IS 383:2016 Table 1, Clause 4.2.1",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Verified]"
+  },
+  {
+    "id": "R-PLAIN",
+    "category": "plain concrete",
+    "condition": "Plain cement concrete (PCC), unreinforced, non-submerged",
+    "allowed_product": "Recycled Concrete Aggregate (RCA coarse & fine up to 25%; RA nil)",
+    "max_share": 25,
+    "basis": "mass",
+    "status": "ELIGIBLE",
+    "source_url": "https://civilapps.in/is-383-2016-table-1",
+    "clause": "IS 383:2016 Table 1, Clause 4.2.1",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Verified]"
+  },
+  {
+    "id": "R-RCC",
+    "category": "reinforced concrete",
+    "condition": "Reinforced cement concrete (RCC) up to M25 grade only; strictly non-prestressed; only one type of manufactured coarse and fine aggregate",
+    "allowed_product": "Recycled Concrete Aggregate (RCA coarse only up to 20%; RA nil)",
+    "max_share": 20,
+    "basis": "mass",
+    "status": "CONDITIONAL",
+    "conditions": [
+      "Grade must not exceed M25 (IS 383:2016 Table 1)",
+      "Strictly prohibited in prestressed concrete (Clause 4.2.2)",
+      "Note 2: Only one type of manufactured coarse aggregate and one type of manufactured fine aggregate permitted in a structure",
+      "Requires structural engineer concurrence before ordering"
+    ],
+    "source_url": "https://civilapps.in/is-383-2016-table-1",
+    "clause": "IS 383:2016 Table 1 & Clause 4.2.2, Note 2",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Verified]"
+  },
+  {
+    "id": "R-PRESTRESSED",
+    "category": "reinforced concrete",
+    "condition": "Prestressed concrete structures or high-tensile elements",
+    "allowed_product": "None",
+    "max_share": 0,
+    "basis": "mass",
+    "status": "NOT_ALLOWED",
+    "conditions": [
+      "Clause 4.2.2 prohibits manufactured and recycled aggregate in prestressed concrete"
+    ],
+    "source_url": "https://civilapps.in/is-383-2016",
+    "clause": "IS 383:2016 Clause 4.2.2",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Verified]"
+  },
+  {
+    "id": "R-HIGH-GRADE-RCC",
+    "category": "reinforced concrete",
+    "condition": "Reinforced concrete of grade M30, M35, M40 or higher",
+    "allowed_product": "None",
+    "max_share": 0,
+    "basis": "mass",
+    "status": "NOT_ALLOWED",
+    "conditions": [
+      "IS 383:2016 Table 1 limits RCA in RCC strictly up to grade M25; higher grades not permitted"
+    ],
+    "source_url": "https://civilapps.in/is-383-2016-table-1",
+    "clause": "IS 383:2016 Table 1 footnote",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Verified]"
+  },
+  {
+    "id": "R-PAVERS-REVIEW",
+    "category": "pavers",
+    "condition": "Precast concrete paving blocks (paver blocks)",
+    "allowed_product": "C&D Recycled aggregate concrete pavers",
+    "max_share": 50,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "conditions": [
+      "Awaiting team/mentor confirmation of Bureau of Indian Standards (BIS) paver product clause (IS 15658)",
+      "MCD lists pavers as permitted recycled product, but statutory maximum share clause must be validated by mentor"
+    ],
+    "source_url": "https://dpcc.delhi.gov.in/cd-waste",
+    "clause": "DPCC Circular & MCD Permitted List [Unverified Clause]",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Unverified]"
+  },
+  {
+    "id": "R-KERBS-REVIEW",
+    "category": "kerbstones",
+    "condition": "Precast concrete kerbstones and edge channel blocks",
+    "allowed_product": "C&D Recycled aggregate kerbstones",
+    "max_share": 50,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "conditions": [
+      "Requires highway/PWD specification clause verification before auto-eligibility"
+    ],
+    "source_url": "https://dpcc.delhi.gov.in/cd-waste",
+    "clause": "MCD Utilisation Advisory 2024 [Unverified Clause]",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Unverified]"
+  },
+  {
+    "id": "R-SUBBASE-REVIEW",
+    "category": "granular sub-base",
+    "condition": "Granular sub-base (GSB) or road sub-grade filling",
+    "allowed_product": "Processed C&D aggregate GSB mix",
+    "max_share": 50,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "conditions": [
+      "MoRTH Section 400 clause limits must be verified for gradation and CBR"
+    ],
+    "source_url": "https://morth.nic.in",
+    "clause": "MoRTH Section 400 draft clause [Unverified Clause]",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Unverified]"
+  },
+  {
+    "id": "R-BACKFILL-REVIEW",
+    "category": "backfill/screened soil",
+    "condition": "Earthwork excavation backfilling or plinth filling",
+    "allowed_product": "Screened soil and processed C&D fines",
+    "max_share": 100,
+    "basis": "volume",
+    "status": "MANUAL_REVIEW",
+    "conditions": [
+      "Geotechnical soil compaction limits require mentor verification"
+    ],
+    "source_url": "https://dpcc.delhi.gov.in",
+    "clause": "CPWD Earthwork Spec [Unverified Clause]",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Unverified]"
+  },
+  {
+    "id": "R-MASONRY-REVIEW",
+    "category": "masonry/plaster sand",
+    "condition": "Manufactured sand for plastering or masonry mortar",
+    "allowed_product": "Recycled manufactured sand (fine aggregate)",
+    "max_share": 25,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "conditions": [
+      "IS 2116 / IS 1542 silt content compliance must be confirmed"
+    ],
+    "source_url": "https://civilapps.in",
+    "clause": "IS 2116 / CPWD Plastering Guideline [Unverified Clause]",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Unverified]"
+  },
+  {
+    "id": "R-TILES-REVIEW",
+    "category": "tiles",
+    "condition": "Cement terrazzo tiles or precast flooring tiles",
+    "allowed_product": "Recycled CC tiles",
+    "max_share": 30,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "conditions": [
+      "Wearing layer aggregate standards require engineering sign-off"
+    ],
+    "source_url": "https://dpcc.delhi.gov.in",
+    "clause": "IS 1237 [Unverified Clause]",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [Unverified]"
+  },
+  {
+    "id": "R-DEFAULT-UNKNOWN",
+    "category": "ineligible/manual review",
+    "condition": "Unrecognized item description or unsupported civil engineering category",
+    "allowed_product": "None",
+    "max_share": 0,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "conditions": [
+      "No cited standard clause exists in the rules register. Default safety fallback requires manual review."
+    ],
+    "source_url": "https://egazette.gov.in/WriteReadData/2025/262313.pdf",
+    "clause": "C&D Waste Rules 2025 Default Safety Gate",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Riya [System Gate]"
+  }
+]

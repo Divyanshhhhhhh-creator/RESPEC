@@ -1,0 +1,94 @@
+/* Print Stylesheet for ReSpec Waste Utilisation Plan */
+
+@media print {
+  /* Hide non-printable app chrome */
+  .respec-navbar,
+  .respec-topbar-wrapper,
+  .no-print,
+  .btn,
+  .interactive-only,
+  .demo-banner,
+  .section-divider {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #233D35 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .respec-main,
+  .respec-main-app {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .respec-card {
+    background: #ffffff !important;
+    border: 1px solid #d1d5db !important;
+    box-shadow: none !important;
+    color: #233D35 !important;
+  }
+
+  .respec-table {
+    border: 1px solid #d1d5db !important;
+    color: #233D35 !important;
+  }
+
+  .respec-table th {
+    background-color: #f3f4f6 !important;
+    color: #233D35 !important;
+    border-bottom: 2px solid #9ca3af !important;
+  }
+
+  .respec-table td {
+    color: #233D35 !important;
+    border-bottom: 1px solid #e5e7eb !important;
+  }
+
+  /* Distinct DRAFT Watermark across the page */
+  .print-draft-watermark {
+    display: block !important;
+    position: fixed !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) rotate(-45deg) !important;
+    font-size: 8rem !important;
+    font-weight: 900 !important;
+    color: rgba(35, 61, 53, 0.08) !important;
+    letter-spacing: 0.25em !important;
+    text-transform: uppercase !important;
+    pointer-events: none !important;
+    z-index: 9999 !important;
+  }
+
+  .print-header {
+    display: block !important;
+    border-bottom: 2px solid #233D35;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+  }
+
+  .print-header h1 {
+    font-size: 18pt !important;
+    color: #233D35 !important;
+    margin-bottom: 4px;
+  }
+
+  .print-header p {
+    color: #4A635B !important;
+    font-size: 10pt !important;
+  }
+}
+
+@media screen {
+  .print-only,
+  .print-draft-watermark,
+  .print-header {
+    display: none;
+  }
+}
