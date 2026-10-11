@@ -1,0 +1,17 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install --ignore-scripts
+        - npm run build --workspace=contracts
+    build:
+      commands:
+        - npm run build --workspace=web
+  artifacts:
+    baseDirectory: web/dist
+    files:
+      - '**/*'
+  cache:
+    paths:
+      - node_modules/**/*
