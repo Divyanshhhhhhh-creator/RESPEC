@@ -1,18 +1,25 @@
 {
-  "name": "respec-api",
+  "name": "@respec/api",
   "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --noEmit",
     "test": "node --test test/*.test.js"
   },
   "dependencies": {
+    "@respec/contracts": "*",
+    "@respec/core": "*",
     "@aws-sdk/client-dynamodb": "^3.900.0",
     "@aws-sdk/client-s3": "^3.900.0",
     "@aws-sdk/client-sfn": "^3.900.0",
     "@aws-sdk/client-textract": "^3.900.0",
     "@aws-sdk/lib-dynamodb": "^3.900.0",
     "@aws-sdk/s3-request-presigner": "^3.900.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
   }
 }
 

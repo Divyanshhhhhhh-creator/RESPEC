@@ -82,6 +82,8 @@ Resources:
 
   ApiFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
     Properties:
       CodeUri: ../api
       Handler: src/handlers/api.handler
@@ -112,6 +114,8 @@ Resources:
 
   StartPipelineFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
     Properties:
       CodeUri: ../api
       Handler: src/handlers/startPipeline.handler
@@ -136,18 +140,24 @@ Resources:
 
   NormalizeFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
     Properties:
       CodeUri: ../api
       Handler: src/handlers/normalize.handler
 
   ClassifyFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
     Properties:
       CodeUri: ../api
       Handler: src/handlers/classify.handler
 
   PersistFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
     Properties:
       CodeUri: ../api
       Handler: src/handlers/persist.handler
@@ -157,6 +167,8 @@ Resources:
 
   CollectTextractFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
     Properties:
       CodeUri: ../api
       Handler: src/handlers/collectTextract.handler
@@ -173,7 +185,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       Runtime: python3.12
-      CodeUri: ../pdf_extractor
+      CodeUri: ../api/pdf_extractor
       Handler: app.handler
       MemorySize: 512
       Timeout: 60
@@ -183,6 +195,8 @@ Resources:
 
   MarkErrorFunction:
     Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: makefile
     Properties:
       CodeUri: ../api
       Handler: src/handlers/markError.handler

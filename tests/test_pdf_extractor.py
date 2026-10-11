@@ -4,7 +4,7 @@ from pathlib import Path
 
 
 PROJECT_ROOT = Path(__file__).parents[1]
-sys.path.insert(0, str(PROJECT_ROOT / "pdf_extractor"))
+sys.path.insert(0, str(PROJECT_ROOT / "api" / "pdf_extractor"))
 
 from core import extract_pdf_rows, rows_from_text  # noqa: E402
 
