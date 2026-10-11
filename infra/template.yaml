@@ -1,0 +1,452 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: ReSpec hackathon backend foundation
+
+Parameters:
+  AppOrigin:
+    Type: String
+    Default: http://localhost:5173
+  DemoPasscode:
+    Type: String
+    NoEcho: true
+    MinLength: 8
+  BudgetEmail:
+    Type: String
+    Default: ""
+  PdfExtractionMode:
+    Type: String
+    Default: LOCAL
+    AllowedValues: [LOCAL, TEXTRACT]
+
+Conditions:
+  CreateBudget: !Not [!Equals [!Ref BudgetEmail, ""]]
+
+Globals:
+  Function:
+    Runtime: nodejs24.x
+    Architectures: [x86_64]
+    MemorySize: 256
+    Timeout: 30
+    Tracing: Active
+    Environment:
+      Variables:
+        TABLE_NAME: !Ref JobsTable
+        BUCKET_NAME: !Ref ArtifactsBucket
+        DEMO_PASSCODE: !Ref DemoPasscode
+
+Resources:
+  ArtifactsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: true
+        BlockPublicPolicy: true
+        IgnorePublicAcls: true
+        RestrictPublicBuckets: true
+      CorsConfiguration:
+        CorsRules:
+          - AllowedOrigins: [!Ref AppOrigin]
+            AllowedMethods: [GET, PUT]
+            AllowedHeaders: ["*"]
+            MaxAge: 300
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  JobsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
+
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins: [!Ref AppOrigin]
+        AllowMethods: [GET, POST, PATCH, OPTIONS]
+        AllowHeaders: [content-type, x-demo-passcode]
+        MaxAge: 300
+
+  ApiFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../api
+      Handler: src/handlers/api.handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref JobsTable
+        - S3CrudPolicy:
+            BucketName: !Ref ArtifactsBucket
+      Events:
+        CreateJob:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /jobs
+            Method: POST
+        GetJob:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /jobs/{id}
+            Method: GET
+        PatchLines:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /jobs/{id}/lines
+            Method: PATCH
+
+  StartPipelineFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../api
+      Handler: src/handlers/startPipeline.handler
+      Environment:
+        Variables:
+          STATE_MACHINE_ARN: !Ref ProcessingStateMachine
+          PDF_EXTRACTION_MODE: !Ref PdfExtractionMode
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref JobsTable
+        - Statement:
+            - Effect: Allow
+              Action: states:StartExecution
+              Resource: !Ref ProcessingStateMachine
+      Events:
+        StartJob:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /jobs/{id}/start
+            Method: POST
+
+  NormalizeFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../api
+      Handler: src/handlers/normalize.handler
+
+  ClassifyFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../api
+      Handler: src/handlers/classify.handler
+
+  PersistFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../api
+      Handler: src/handlers/persist.handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref JobsTable
+
+  CollectTextractFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../api
+      Handler: src/handlers/collectTextract.handler
+      Timeout: 60
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref ArtifactsBucket
+        - Statement:
+            - Effect: Allow
+              Action: textract:GetDocumentAnalysis
+              Resource: "*"
+
+  ExtractPdfLocalFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: python3.12
+      CodeUri: ../pdf_extractor
+      Handler: app.handler
+      MemorySize: 512
+      Timeout: 60
+      Policies:
+        - S3CrudPolicy:
+            BucketName: !Ref ArtifactsBucket
+
+  MarkErrorFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ../api
+      Handler: src/handlers/markError.handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref JobsTable
+
+  ProcessingStateMachine:
+    Type: AWS::Serverless::StateMachine
+    Properties:
+      Type: STANDARD
+      Definition:
+        StartAt: RouteSource
+        States:
+          RouteSource:
+            Type: Choice
+            Choices:
+              - Variable: $.source
+                StringEquals: PDF
+                Next: RoutePdfExtraction
+            Default: NormalizeRows
+          RoutePdfExtraction:
+            Type: Choice
+            Choices:
+              - Variable: $.extractionMode
+                StringEquals: TEXTRACT
+                Next: StartTextract
+            Default: ExtractPdfLocal
+          ExtractPdfLocal:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: !GetAtt ExtractPdfLocalFunction.Arn
+              Payload:
+                jobId.$: $.jobId
+                s3.$: $.s3
+                cacheKey.$: $.cacheKey
+            ResultSelector:
+              jobId.$: $.Payload.jobId
+              rows.$: $.Payload.rows
+              localExtractionCacheKey.$: $.Payload.localExtractionCacheKey
+            ResultPath: $.extracted
+            Next: NormalizePdf
+            Catch: [{ ErrorEquals: [States.ALL], ResultPath: $.error, Next: MarkError }]
+          StartTextract:
+            Type: Task
+            Resource: arn:aws:states:::aws-sdk:textract:startDocumentAnalysis
+            Parameters:
+              DocumentLocation:
+                S3Object:
+                  Bucket.$: $.s3.bucket
+                  Name.$: $.s3.key
+              FeatureTypes: [TABLES]
+            ResultPath: $.textractStart
+            Next: WaitForTextract
+            Catch: [{ ErrorEquals: [States.ALL], ResultPath: $.error, Next: MarkError }]
+          WaitForTextract:
+            Type: Wait
+            Seconds: 5
+            Next: PollTextract
+          PollTextract:
+            Type: Task
+            Resource: arn:aws:states:::aws-sdk:textract:getDocumentAnalysis
+            Parameters:
+              JobId.$: $.textractStart.JobId
+              MaxResults: 1
+            ResultPath: $.textractStatus
+            Next: CheckTextract
+            Catch: [{ ErrorEquals: [States.ALL], ResultPath: $.error, Next: MarkError }]
+          CheckTextract:
+            Type: Choice
+            Choices:
+              - Variable: $.textractStatus.JobStatus
+                StringEquals: SUCCEEDED
+                Next: CollectTextract
+              - Variable: $.textractStatus.JobStatus
+                StringEquals: PARTIAL_SUCCESS
+                Next: CollectTextract
+              - Variable: $.textractStatus.JobStatus
+                StringEquals: FAILED
+                Next: TextractFailed
+            Default: WaitForTextract
+          TextractFailed:
+            Type: Pass
+            Parameters:
+              Error: TEXTRACT_FAILED
+              Cause: Textract reported a failed document-analysis job
+            ResultPath: $.error
+            Next: MarkError
+          CollectTextract:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: !GetAtt CollectTextractFunction.Arn
+              Payload:
+                jobId.$: $.jobId
+                textractJobId.$: $.textractStart.JobId
+                cacheKey.$: $.cacheKey
+            ResultSelector:
+              jobId.$: $.Payload.jobId
+              rows.$: $.Payload.rows
+              textractCacheKey.$: $.Payload.textractCacheKey
+            ResultPath: $.extracted
+            Next: NormalizePdf
+            Catch: [{ ErrorEquals: [States.ALL], ResultPath: $.error, Next: MarkError }]
+          NormalizePdf:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: !GetAtt NormalizeFunction.Arn
+              Payload:
+                jobId.$: $.jobId
+                rows.$: $.extracted.rows
+            ResultSelector:
+              jobId.$: $.Payload.jobId
+              lines.$: $.Payload.lines
+            ResultPath: $.normalized
+            Next: Classify
+            Catch: [{ ErrorEquals: [States.ALL], ResultPath: $.error, Next: MarkError }]
+          NormalizeRows:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: !GetAtt NormalizeFunction.Arn
+              Payload:
+                jobId.$: $.jobId
+                rows.$: $.rows
+            ResultSelector:
+              jobId.$: $.Payload.jobId
+              lines.$: $.Payload.lines
+            ResultPath: $.normalized
+            Next: Classify
+            Catch: [{ ErrorEquals: [States.ALL], ResultPath: $.error, Next: MarkError }]
+          Classify:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: !GetAtt ClassifyFunction.Arn
+              Payload:
+                jobId.$: $.jobId
+                lines.$: $.normalized.lines
+            ResultSelector:
+              jobId.$: $.Payload.jobId
+              lines.$: $.Payload.lines
+            ResultPath: $.classified
+            Next: Persist
+            Catch: [{ ErrorEquals: [States.ALL], ResultPath: $.error, Next: MarkError }]
+          Persist:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: !GetAtt PersistFunction.Arn
+              Payload:
+                jobId.$: $.jobId
+                lines.$: $.classified.lines
+            OutputPath: $.Payload
+            End: true
+            Catch: [{ ErrorEquals: [States.ALL], ResultPath: $.error, Next: MarkError }]
+          MarkError:
+            Type: Task
+            Resource: arn:aws:states:::lambda:invoke
+            Parameters:
+              FunctionName: !GetAtt MarkErrorFunction.Arn
+              Payload:
+                jobId.$: $.jobId
+                error.$: $.error
+            Next: PipelineFailed
+          PipelineFailed:
+            Type: Fail
+            Error: RESPEC_PIPELINE_FAILED
+      Policies:
+        - LambdaInvokePolicy:
+            FunctionName: !Ref NormalizeFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref ClassifyFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref PersistFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref CollectTextractFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref ExtractPdfLocalFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref MarkErrorFunction
+        - Statement:
+            - Effect: Allow
+              Action:
+                - textract:StartDocumentAnalysis
+                - textract:GetDocumentAnalysis
+              Resource: "*"
+
+  FunctionLogGroupApi:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${ApiFunction}
+      RetentionInDays: 14
+
+  FunctionLogGroupStartPipeline:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${StartPipelineFunction}
+      RetentionInDays: 14
+
+  FunctionLogGroupNormalize:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${NormalizeFunction}
+      RetentionInDays: 14
+
+  FunctionLogGroupClassify:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${ClassifyFunction}
+      RetentionInDays: 14
+
+  FunctionLogGroupPersist:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${PersistFunction}
+      RetentionInDays: 14
+
+  FunctionLogGroupCollectTextract:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${CollectTextractFunction}
+      RetentionInDays: 14
+
+  FunctionLogGroupExtractPdfLocal:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${ExtractPdfLocalFunction}
+      RetentionInDays: 14
+
+  FunctionLogGroupMarkError:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub /aws/lambda/${MarkErrorFunction}
+      RetentionInDays: 14
+
+  HackathonBudget:
+    Type: AWS::Budgets::Budget
+    Condition: CreateBudget
+    Properties:
+      Budget:
+        BudgetLimit: { Amount: 10, Unit: USD }
+        BudgetName: !Sub ${AWS::StackName}-10-usd
+        BudgetType: COST
+        TimeUnit: MONTHLY
+      NotificationsWithSubscribers:
+        - Notification:
+            ComparisonOperator: GREATER_THAN
+            NotificationType: ACTUAL
+            Threshold: 80
+            ThresholdType: PERCENTAGE
+          Subscribers:
+            - Address: !Ref BudgetEmail
+              SubscriptionType: EMAIL
+
+Outputs:
+  ApiUrl:
+    Value: !Sub https://${HttpApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}
+  ArtifactsBucketName:
+    Value: !Ref ArtifactsBucket
+  JobsTableName:
+    Value: !Ref JobsTable
+  PipelineArn:
+    Value: !Ref ProcessingStateMachine
+

@@ -18,7 +18,10 @@
     "test:contracts": "npm run test:contracts --workspace=contracts",
     "test:integration": "npm run test:integration --workspace=api",
     "eval": "npm run eval --workspace=eval",
-    "lint": "npm run lint --workspaces --if-present"
+    "lint": "npm run lint --workspaces --if-present",
+    "sam:validate": "sam validate --lint --template-file infra/template.yaml",
+    "sam:build": "sam build --template-file infra/template.yaml",
+    "sam:deploy": "sam deploy --guided --template-file .aws-sam/build/template.yaml --region ap-south-1"
   },
   "engines": {
     "node": ">=20"
