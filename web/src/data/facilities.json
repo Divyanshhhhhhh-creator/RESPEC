@@ -1,0 +1,82 @@
+[
+  {
+    "id": "FAC-BURARI",
+    "name": "Burari C&D Processing Facility",
+    "operator": "IL&FS Environmental Infrastructure & Services Ltd (IEISL)",
+    "authority": "Municipal Corporation of Delhi (MCD)",
+    "location": "Jahangirpuri / Burari, North Delhi",
+    "lat": 28.7352,
+    "lng": 77.1953,
+    "capacityTPD": 2000,
+    "productsOffered": [
+      "Recycled Concrete Aggregate (RCA 10mm, 20mm)",
+      "Recycled Aggregate (RA 40mm)",
+      "Manufactured Recycled Sand",
+      "Granular Sub-Base (GSB)",
+      "Precast Concrete Paver Blocks",
+      "Kerb Stones"
+    ],
+    "phone": "+91-11-27618900",
+    "status": "Operational [U]",
+    "verifiedSource": "DPCC Annual Report FY 2023-24 [Table 4.1]"
+  },
+  {
+    "id": "FAC-SHASTRI-PARK",
+    "name": "Shastri Park C&D Waste Facility",
+    "operator": "IL&FS / MCD Joint Facility",
+    "authority": "Municipal Corporation of Delhi (MCD)",
+    "location": "Shastri Park, East Delhi",
+    "lat": 28.6738,
+    "lng": 77.2514,
+    "capacityTPD": 500,
+    "productsOffered": [
+      "Recycled Concrete Aggregate (RCA 10mm, 20mm)",
+      "Recycled Manufactured Sand",
+      "Interlocking Pavers",
+      "Kerbstones",
+      "Recycled Soil / Fill"
+    ],
+    "phone": "+91-11-22567112",
+    "status": "Operational [U]",
+    "verifiedSource": "DPCC Annual Report FY 2023-24 [Table 4.1]"
+  },
+  {
+    "id": "FAC-RANIKHERA",
+    "name": "Ranikhera (Mundka) C&D Processing Facility",
+    "operator": "IL&FS / MCD concessionaire",
+    "authority": "Municipal Corporation of Delhi (MCD)",
+    "location": "Rani Khera, Mundka, North-West Delhi",
+    "lat": 28.7186,
+    "lng": 77.0261,
+    "capacityTPD": 1000,
+    "productsOffered": [
+      "Recycled Concrete Aggregate (RCA)",
+      "Recycled Aggregate (RA)",
+      "C&D Manufactured Sand",
+      "Granular Sub-Base (GSB)",
+      "CC Bricks and Hollow Blocks"
+    ],
+    "phone": "+91-11-28345100",
+    "status": "Operational [U]",
+    "verifiedSource": "DPCC Annual Report FY 2023-24 [Ranikhera and Mundka single site note]"
+  },
+  {
+    "id": "FAC-BAKKARWALA",
+    "name": "Bakkarwala C&D Plant",
+    "operator": "Evergreen Enviro / DMRC / MCD",
+    "authority": "Municipal Corporation of Delhi (MCD)",
+    "location": "Bakkarwala, West Delhi",
+    "lat": 28.6653,
+    "lng": 77.0125,
+    "capacityTPD": 1000,
+    "productsOffered": [
+      "Recycled Concrete Aggregate (RCA 20mm)",
+      "Granular Sub-Base (GSB)",
+      "Screened Backfill Soil",
+      "Paver Blocks"
+    ],
+    "phone": "+91-11-25912345",
+    "status": "Operational [U]",
+    "verifiedSource": "DPCC Annual Report FY 2023-24 [Table 4.1]"
+  }
+]

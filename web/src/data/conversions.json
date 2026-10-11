@@ -1,0 +1,98 @@
+{
+  "unitsSupported": ["m3", "m2", "m", "nos", "kg", "t"],
+  "densities": {
+    "concrete": {
+      "value": 2.4,
+      "unit": "t/m3",
+      "tag": "[E]",
+      "description": "Standard normal weight concrete density (2400 kg/m3)",
+      "overrideAllowed": true
+    },
+    "lean_concrete": {
+      "value": 2.2,
+      "unit": "t/m3",
+      "tag": "[E]",
+      "description": "PCC / Lean concrete density (2200 kg/m3)",
+      "overrideAllowed": true
+    },
+    "soil_backfill": {
+      "value": 1.6,
+      "unit": "t/m3",
+      "tag": "[E]",
+      "description": "Compacted soil / earthwork density (1600 kg/m3)",
+      "overrideAllowed": true
+    },
+    "gsb_aggregate": {
+      "value": 2.0,
+      "unit": "t/m3",
+      "tag": "[E]",
+      "description": "Compacted granular sub-base density (2000 kg/m3)",
+      "overrideAllowed": true
+    },
+    "paver_block": {
+      "value": 2.3,
+      "unit": "t/m3",
+      "tag": "[E]",
+      "description": "Precast concrete paver density (2300 kg/m3)",
+      "overrideAllowed": true
+    },
+    "sand_mortar": {
+      "value": 1.7,
+      "unit": "t/m3",
+      "tag": "[E]",
+      "description": "Fine aggregate / sand density (1700 kg/m3)",
+      "overrideAllowed": true
+    }
+  },
+  "fractions": {
+    "concrete_coarse_aggregate_share": {
+      "value": 0.45,
+      "tag": "[A]",
+      "description": "Assumed mass fraction of coarse aggregate in nominal concrete mix (45%)",
+      "overrideAllowed": true
+    },
+    "concrete_fine_aggregate_share": {
+      "value": 0.25,
+      "tag": "[A]",
+      "description": "Assumed mass fraction of fine aggregate / sand in concrete mix (25%)",
+      "overrideAllowed": true
+    },
+    "concrete_total_aggregate_share": {
+      "value": 0.70,
+      "tag": "[A]",
+      "description": "Assumed total aggregate fraction in concrete mix (70% by mass)",
+      "overrideAllowed": true
+    }
+  },
+  "defaultThicknesses": {
+    "pavers": {
+      "value": 0.08,
+      "unit": "m",
+      "tag": "[E]",
+      "description": "Standard 80mm heavy-duty paver thickness for commercial/vehicular traffic",
+      "overrideAllowed": true
+    },
+    "tiles": {
+      "value": 0.025,
+      "unit": "m",
+      "tag": "[E]",
+      "description": "Standard 25mm precast cement tile thickness",
+      "overrideAllowed": true
+    }
+  },
+  "metalWoodExclusions": [
+    "steel",
+    "rebar",
+    "tmt",
+    "structural steel",
+    "reinforcement bar",
+    "shuttering",
+    "plywood",
+    "timber",
+    "wood",
+    "aluminium",
+    "glass",
+    "structural glazing",
+    "hardware"
+  ]
+}
