@@ -1,0 +1,111 @@
+{
+  "_comment": "Density and conversion factors for BOQ mass estimation. ALL values are [E] estimates unless marked [V]. Engineer can override any value in the UI. Missing factor → exclude from gap denominator and list in missingFactors.",
+  "units": {
+    "m3": {
+      "description": "cubic metres — volume unit",
+      "canConvertToMass": true,
+      "note": "Multiply by density factor to get mass"
+    },
+    "m2": {
+      "description": "square metres — area unit (pavers, tiles)",
+      "canConvertToMass": true,
+      "note": "Multiply by thickness × density to get mass. Thickness must be parsed from description or entered by user."
+    },
+    "m": {
+      "description": "linear metres — length unit (kerbstones, pipes)",
+      "canConvertToMass": false,
+      "note": "Cannot convert to mass without cross-section; exclude from denominator [MISSING_MASS_FACTOR]"
+    },
+    "nos": {
+      "description": "numbers — count unit",
+      "canConvertToMass": false,
+      "note": "Cannot convert to mass without unit weight; exclude from denominator [MISSING_MASS_FACTOR]"
+    },
+    "kg": {
+      "description": "kilograms",
+      "canConvertToMass": true,
+      "factor": 0.001,
+      "unit": "t",
+      "note": "Divide by 1000 to get tonnes"
+    },
+    "t": {
+      "description": "tonnes — mass unit",
+      "canConvertToMass": true,
+      "factor": 1.0,
+      "unit": "t",
+      "note": "Direct mass"
+    }
+  },
+  "densities": {
+    "lean_concrete": {
+      "value": 1.8,
+      "unit": "t/m3",
+      "status": "E",
+      "note": "[E] Lean concrete (1:4:8 and similar) bulk density estimate. Confirm with civil engineer.",
+      "source": null,
+      "engineerOverride": null
+    },
+    "plain_concrete": {
+      "value": 2.4,
+      "unit": "t/m3",
+      "status": "E",
+      "note": "[E] Plain cement concrete density estimate (standard value widely used). Confirm grade-specific value with structural engineer.",
+      "source": null,
+      "engineerOverride": null
+    },
+    "reinforced_concrete": {
+      "value": 2.4,
+      "unit": "t/m3",
+      "status": "E",
+      "note": "[E] RCC density estimate. Steel reinforcement adds ~2–3%; using 2.4 t/m³ as conservative estimate.",
+      "source": null,
+      "engineerOverride": null
+    },
+    "masonry_plaster_sand": {
+      "value": 1.6,
+      "unit": "t/m3",
+      "status": "E",
+      "note": "[E] Sand density estimate (loose bulk density ~1.6 t/m³). Confirm with site engineer.",
+      "source": null,
+      "engineerOverride": null
+    }
+  },
+  "areaThicknessDefaults": {
+    "pavers": {
+      "defaultThicknessM": 0.08,
+      "density": 2.4,
+      "unit": "t/m3",
+      "status": "E",
+      "note": "[E] Paver blocks: default 80mm thickness × 2.4 t/m³ = 0.192 t/m². Thickness MUST be parsed from description (e.g. '80mm thick') or entered by user; default only if not found.",
+      "source": null,
+      "engineerOverride": null
+    },
+    "tiles": {
+      "defaultThicknessM": 0.012,
+      "density": 2.2,
+      "unit": "t/m3",
+      "status": "E",
+      "note": "[E] Ceramic tiles: default 12mm thickness × 2.2 t/m³ = 0.0264 t/m². Parse from description; default only if not found.",
+      "source": null,
+      "engineerOverride": null
+    }
+  },
+  "aggregateFractions": {
+    "_comment": "What fraction of concrete volume is aggregate (coarse + fine). Used to derive aggregate mass from concrete volume. [A] These fractions are assumptions — confirm with civil mentor (D11 decision).",
+    "lean_concrete": {
+      "aggregateFraction": 0.75,
+      "status": "A",
+      "note": "[A] Lean concrete: aggregate fraction ~0.75 of concrete volume. Divyansh approves; mentor reviews."
+    },
+    "plain_concrete": {
+      "aggregateFraction": 0.65,
+      "status": "A",
+      "note": "[A] PCC: aggregate fraction ~0.65. Standard mix design assumption."
+    },
+    "reinforced_concrete": {
+      "aggregateFraction": 0.65,
+      "status": "A",
+      "note": "[A] RCC: aggregate fraction ~0.65. Standard mix design assumption."
+    }
+  }
+}

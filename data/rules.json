@@ -1,0 +1,224 @@
+[
+  {
+    "id": "R-LEAN",
+    "category": "lean_concrete",
+    "condition": {
+      "grade": null,
+      "gradeMax": "M15",
+      "structural": false,
+      "note": "Lean concrete < M15 only"
+    },
+    "allowed_product": "RCA coarse and fine aggregate; RA coarse aggregate",
+    "max_share": 1.0,
+    "basis": "mass",
+    "status": "ELIGIBLE",
+    "source_url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+    "clause": "IS 383:2016 Table 1, Note 1 — lean concrete <M15: RCA coarse and fine up to 100%; RA coarse up to 100%",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh [V via secondary copy — confirm with civil mentor]",
+    "notes": "[V secondary] IS 383:2016 Table 1 limits confirmed from civilapps.in and slideshare copies"
+  },
+  {
+    "id": "R-PLAIN",
+    "category": "plain_concrete",
+    "condition": {
+      "grade": null,
+      "structural": false,
+      "note": "Plain concrete (PCC) — any grade"
+    },
+    "allowed_product": "RCA (coarse and fine)",
+    "max_share": 0.25,
+    "basis": "mass",
+    "status": "ELIGIBLE",
+    "source_url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+    "clause": "IS 383:2016 Table 1 — plain concrete: RCA up to 25% of aggregate by mass; RA nil",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh [V via secondary copy]",
+    "notes": "RA (recycled aggregate, non-concrete origin) = nil in PCC per Table 1"
+  },
+  {
+    "id": "R-RCC",
+    "category": "reinforced_concrete",
+    "condition": {
+      "grade": null,
+      "gradeMax": "M25",
+      "structural": true,
+      "note": "Reinforced concrete up to M25 only; NOT for prestressed; Note 2 applies"
+    },
+    "allowed_product": "RCA (coarse only)",
+    "max_share": 0.20,
+    "basis": "mass",
+    "status": "CONDITIONAL",
+    "source_url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+    "clause": "IS 383:2016 Table 1 — reinforced concrete up to M25: RCA up to 20% of coarse aggregate; RA nil",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh [V via secondary copy — confirm Note 2 with civil mentor]",
+    "notes": "[V secondary] Note 2: only one type of manufactured coarse and one type of manufactured fine aggregate in a structure. Grade must be confirmed by structural engineer."
+  },
+  {
+    "id": "R-RCC-ABOVE-M25",
+    "category": "reinforced_concrete",
+    "condition": {
+      "gradeMin": "M30",
+      "structural": true,
+      "note": "RCC above M25"
+    },
+    "allowed_product": "N/A",
+    "max_share": 0.0,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "source_url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+    "clause": "IS 383:2016 Table 1 — RCA in reinforced concrete: limited to grades up to M25. Above M25: no sourced permission found — MANUAL_REVIEW",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh",
+    "notes": "The standard stops at M25 for RCC. M30+ → MANUAL_REVIEW per safety rules."
+  },
+  {
+    "id": "R-RCC-PRESTRESSED-EXCLUSION",
+    "category": "reinforced_concrete",
+    "condition": {
+      "structural": true,
+      "prestressed": true,
+      "note": "Prestressed concrete — manufactured aggregates NOT permitted"
+    },
+    "allowed_product": "N/A",
+    "max_share": 0.0,
+    "basis": "mass",
+    "status": "NOT_ALLOWED",
+    "source_url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+    "clause": "IS 383:2016 clause 4.2.2 — manufactured aggregates not permitted in prestressed concrete",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh [V via secondary copy]",
+    "notes": "SAFETY CRITICAL: Prestressed concrete → NOT_ALLOWED. Cannot be overridden."
+  },
+  {
+    "id": "R-RCC-UNKNOWN-GRADE",
+    "category": "reinforced_concrete",
+    "condition": {
+      "grade": null,
+      "structural": true,
+      "note": "Unknown or unparsed concrete grade"
+    },
+    "allowed_product": "N/A",
+    "max_share": 0.0,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "source_url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+    "clause": "IS 383:2016 Table 1 — cannot determine eligibility without concrete grade; requires manual review",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh",
+    "notes": "SAFETY: Unknown grade → MANUAL_REVIEW. Cannot auto-approve structural concrete without confirmed grade."
+  },
+  {
+    "id": "R-PAVERS-MANUAL",
+    "category": "pavers",
+    "condition": {
+      "structural": false,
+      "note": "Paver blocks — product standard for recycled content not yet sourced"
+    },
+    "allowed_product": "Recycled C&D material paver blocks (MCD-listed product)",
+    "max_share": 1.0,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "source_url": "https://mcd.gov.in/sites/default/files/press_release/recycled_products_list_2023.pdf",
+    "clause": "MCD recycled products list — paver blocks listed; IS standard for recycled content limits not yet sourced [U]",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh",
+    "notes": "[U] Paver block recycled content standard not confirmed — civil mentor review needed. Ships as MANUAL_REVIEW until sourced."
+  },
+  {
+    "id": "R-KERBS-MANUAL",
+    "category": "kerbstones",
+    "condition": {
+      "structural": false,
+      "note": "Kerbstones — product standard for recycled content not yet sourced"
+    },
+    "allowed_product": "Recycled C&D material kerbstones (MCD-listed product)",
+    "max_share": 1.0,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "source_url": "https://mcd.gov.in/sites/default/files/press_release/recycled_products_list_2023.pdf",
+    "clause": "MCD recycled products list — kerb stones listed; IS standard for recycled content limits not yet sourced [U]",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh",
+    "notes": "[U] Ships as MANUAL_REVIEW until civil mentor confirms limits."
+  },
+  {
+    "id": "R-TILES-MANUAL",
+    "category": "tiles",
+    "condition": {
+      "structural": false
+    },
+    "allowed_product": "Recycled C&D tiles",
+    "max_share": 1.0,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "source_url": "https://mcd.gov.in/sites/default/files/press_release/recycled_products_list_2023.pdf",
+    "clause": "MCD recycled products list — tiles listed; specific IS standard and recycled content limits not yet sourced [U]",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh",
+    "notes": "[U] Ships as MANUAL_REVIEW."
+  },
+  {
+    "id": "R-GSB-MANUAL",
+    "category": "granular_sub_base",
+    "condition": {
+      "structural": false
+    },
+    "allowed_product": "Recycled C&D granular material (screened aggregate)",
+    "max_share": 1.0,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "source_url": null,
+    "clause": "Sub-base specification limits using recycled aggregate not yet sourced [U] — MANUAL_REVIEW until confirmed with civil mentor",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh",
+    "notes": "[U] Ships as MANUAL_REVIEW per Section 5 of Spec: 'sub-base and backfill specification limits [...] do not guess limits'"
+  },
+  {
+    "id": "R-BACKFILL-MANUAL",
+    "category": "backfill_screened_soil",
+    "condition": {
+      "structural": false
+    },
+    "allowed_product": "Screened recycled C&D soil and aggregate",
+    "max_share": 1.0,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "source_url": null,
+    "clause": "Backfill specification limits using recycled C&D material not yet sourced [U] — MANUAL_REVIEW",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh",
+    "notes": "[U] Ships as MANUAL_REVIEW."
+  },
+  {
+    "id": "R-MASONRY-MANUAL",
+    "category": "masonry_plaster_sand",
+    "condition": {
+      "structural": false
+    },
+    "allowed_product": "Recycled masonry sand",
+    "max_share": 0.5,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "source_url": null,
+    "clause": "Masonry sand recycled content limits not yet sourced [U] — MANUAL_REVIEW",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh",
+    "notes": "[U] Ships as MANUAL_REVIEW."
+  },
+  {
+    "id": "R-INELIGIBLE",
+    "category": "ineligible_manual_review",
+    "condition": {},
+    "allowed_product": "N/A",
+    "max_share": 0.0,
+    "basis": "mass",
+    "status": "MANUAL_REVIEW",
+    "source_url": null,
+    "clause": "Category 'ineligible/manual review' — no C&D recycled material substitution sourced for this line type",
+    "last_checked": "2026-10-09",
+    "reviewed_by": "Divyansh",
+    "notes": "Default catch-all for unknown or ineligible line categories."
+  }
+]

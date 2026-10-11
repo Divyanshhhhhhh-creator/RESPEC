@@ -1,0 +1,5 @@
+{
+  "jobId": "job-fixture-001",
+  "uploadUrl": "https://s3.ap-south-1.amazonaws.com/respec-boq-evidence/boq/job-fixture-001/boq.pdf?X-Amz-Expires=300",
+  "key": "boq/job-fixture-001/boq.pdf"
+}

@@ -1,0 +1,149 @@
+{
+  "recommendations": [
+    {
+      "recId": "rec-001",
+      "lineId": "line-001",
+      "ruleId": "R-LEAN",
+      "status": "ELIGIBLE",
+      "product": "RCA coarse and fine aggregate",
+      "maxShare": 1.0,
+      "modelledMassT": 216,
+      "conditions": [],
+      "source": {
+        "url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+        "clause": "IS 383:2016 Table 1, Note 1 — lean concrete <M15: RCA coarse and fine up to 100%; RA coarse up to 100%"
+      },
+      "ledgerState": "ELIGIBLE",
+      "facilityOptions": [
+        { "facilityId": "fac-shastri-park", "distanceKm": 9.4 },
+        { "facilityId": "fac-rani-khera", "distanceKm": 14.2 }
+      ]
+    },
+    {
+      "recId": "rec-002",
+      "lineId": "line-002",
+      "ruleId": "R-PLAIN",
+      "status": "ELIGIBLE",
+      "product": "RCA (coarse and fine)",
+      "maxShare": 0.25,
+      "modelledMassT": 48,
+      "conditions": [],
+      "source": {
+        "url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+        "clause": "IS 383:2016 Table 1 — plain concrete: RCA up to 25% of aggregate by mass; RA nil"
+      },
+      "ledgerState": "ELIGIBLE",
+      "facilityOptions": [
+        { "facilityId": "fac-shastri-park", "distanceKm": 9.4 }
+      ]
+    },
+    {
+      "recId": "rec-003",
+      "lineId": "line-003",
+      "ruleId": "R-RCC",
+      "status": "CONDITIONAL",
+      "product": "RCA (coarse only)",
+      "maxShare": 0.20,
+      "modelledMassT": 28.8,
+      "conditions": [
+        "Grade ≤ M25 [IS 383:2016 Table 1 clause 4.2.1]",
+        "Only one type of manufactured coarse aggregate in the structure [IS 383:2016 Note 2]",
+        "Approver must confirm grade M20 with structural engineer"
+      ],
+      "source": {
+        "url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+        "clause": "IS 383:2016 Table 1 — reinforced concrete up to M25: RCA up to 20% of coarse aggregate"
+      },
+      "ledgerState": "ELIGIBLE",
+      "facilityOptions": [
+        { "facilityId": "fac-shastri-park", "distanceKm": 9.4 }
+      ]
+    },
+    {
+      "recId": "rec-004",
+      "lineId": "line-004",
+      "ruleId": "R-RCC-PRESTRESSED-EXCLUSION",
+      "status": "NOT_ALLOWED",
+      "product": "N/A",
+      "maxShare": 0,
+      "modelledMassT": 0,
+      "conditions": [],
+      "source": {
+        "url": "https://law.resource.org/pub/in/bis/S02/is.383.2016.pdf",
+        "clause": "IS 383:2016 clause 4.2.2 — manufactured aggregates not permitted in prestressed concrete"
+      },
+      "ledgerState": "ELIGIBLE",
+      "facilityOptions": []
+    },
+    {
+      "recId": "rec-005",
+      "lineId": "line-005",
+      "ruleId": "R-PAVERS-MANUAL",
+      "status": "MANUAL_REVIEW",
+      "product": "Recycled C&D material pavers",
+      "maxShare": 1.0,
+      "modelledMassT": 152,
+      "conditions": [
+        "Paver product standard and recycled content limits not yet sourced [U] — requires civil mentor review"
+      ],
+      "source": {
+        "url": "https://mcd.gov.in/sites/default/files/press_release/recycled_products_list_2023.pdf",
+        "clause": "MCD recycled products list — paver blocks listed as eligible product; IS standard for recycled paver blocks not yet verified"
+      },
+      "ledgerState": "ELIGIBLE",
+      "facilityOptions": [
+        { "facilityId": "fac-shastri-park", "distanceKm": 9.4 }
+      ]
+    }
+  ],
+  "gap": {
+    "applicable": true,
+    "targetPct": 0.05,
+    "modelledPct": 0.399,
+    "denominatorT": 748,
+    "numeratorT": 292.8,
+    "assumptions": [
+      "[A] Denominator excludes metal (line-007: 25 t MS steel) and ineligible lines per Spec §11",
+      "[A] Denominator excludes lines with missing mass factors: granular_sub_base (line-006), kerbstones (line-008)",
+      "[E] Concrete density assumed 2.4 t/m³ for RCC/plain; 1.8 t/m³ for lean — label as estimates",
+      "[E] Paver mass: 0.08m thickness × 2.4 t/m³ = 0.19 t/m²",
+      "[A] Numerator counts ELIGIBLE and CONDITIONAL approved lines only; MANUAL_REVIEW excluded until approved",
+      "[V] Target: Second Schedule C&D Waste Rules 2025 — 5% of total construction material in 2026-27",
+      "Road lines excluded as this project is type=building",
+      "Note: modelledPct assumes all eligible recs are approved — actual approved share will be lower"
+    ],
+    "topLines": [
+      {
+        "lineId": "line-001",
+        "itemNo": "1",
+        "description": "Lean concrete (1:4:8) under footings",
+        "modelledMassT": 216,
+        "maxShare": 1.0
+      },
+      {
+        "lineId": "line-005",
+        "itemNo": "5",
+        "description": "Interlocking paver blocks 80mm thick",
+        "modelledMassT": 152,
+        "maxShare": 1.0
+      },
+      {
+        "lineId": "line-002",
+        "itemNo": "2",
+        "description": "Plain cement concrete M15 in raft foundation",
+        "modelledMassT": 192,
+        "maxShare": 0.25
+      }
+    ],
+    "excluded": [
+      { "lineId": "line-006", "reason": "MISSING_MASS_FACTOR: granular_sub_base (m³) — no density in conversions.json" },
+      { "lineId": "line-007", "reason": "Ineligible material: metal (MS structural steel)" },
+      { "lineId": "line-008", "reason": "MISSING_MASS_FACTOR: kerbstones (m) — no mass factor in conversions.json" }
+    ],
+    "missingFactors": [
+      { "lineId": "line-006", "unit": "m3" },
+      { "lineId": "line-008", "unit": "m" }
+    ],
+    "scheduleRef": "C&D Waste Rules 2025 — Second Schedule (buildings ≥20,000 m²) — FY 2026-27: 5%"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "eligibleT": 440.8,
+  "plannedT": 440.8,
+  "orderedT": 440.8,
+  "verifiedT": 100.0,
+  "assumptions": [
+    "[A] eligibleT = Σ modelledMassT for ELIGIBLE and CONDITIONAL recs",
+    "[A] plannedT = eligibleT after plan generation (approved recs only)",
+    "[S] verifiedT = 100 t — synthetic demo delivery evidence"
+  ]
+}

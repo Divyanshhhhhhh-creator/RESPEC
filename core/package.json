@@ -1,0 +1,45 @@
+{
+  "name": "@respec/core",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./gap": {
+      "import": "./dist/gap/index.js",
+      "types": "./dist/gap/index.d.ts"
+    },
+    "./ledger": {
+      "import": "./dist/ledger/index.js",
+      "types": "./dist/ledger/index.d.ts"
+    },
+    "./normalize": {
+      "import": "./dist/normalize/index.js",
+      "types": "./dist/normalize/index.d.ts"
+    },
+    "./classify": {
+      "import": "./dist/classify/index.js",
+      "types": "./dist/classify/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsc --project tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "tsc --project tsconfig.json --watch"
+  },
+  "dependencies": {
+    "@respec/contracts": "*",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "vitest": "^2.1.0"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "respec",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ReSpec — BOQ recycled C&D material compliance tool. WeMakeDevs Environmental Hacks 2026.",
+  "workspaces": [
+    "web",
+    "api",
+    "core",
+    "contracts",
+    "eval"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=web",
+    "build": "npm run build --workspace=contracts && npm run build --workspace=core && npm run build --workspace=web",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "test:contracts": "npm run test:contracts --workspace=contracts",
+    "test:integration": "npm run test:integration --workspace=api",
+    "eval": "npm run eval --workspace=eval",
+    "lint": "npm run lint --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

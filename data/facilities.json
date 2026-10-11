@@ -1,0 +1,63 @@
+[
+  {
+    "facilityId": "fac-shastri-park",
+    "name": "Shastri Park C&D Waste Processing Plant",
+    "operator": "MCD",
+    "status": "U",
+    "statusNote": "[U] Existence confirmed from DPCC table; capacity and current product list not verified by team. Confirm by phone before ordering.",
+    "lat": 28.6638,
+    "lng": 77.2567,
+    "capacityTPD": null,
+    "products": ["RCA coarse aggregate", "RCA fine aggregate", "Paver blocks", "Kerb stones"],
+    "productsNote": "[U] Product list from DPCC table — may not reflect current production. Never show as live stock.",
+    "source": "DPCC Annual Report FY 2023-24 (dpcc.delhi.gov.in)",
+    "sourceStatus": "U",
+    "lastChecked": "2026-10-09"
+  },
+  {
+    "facilityId": "fac-burari",
+    "name": "Burari C&D Waste Processing Plant",
+    "operator": "MCD",
+    "status": "U",
+    "statusNote": "[U] Listed in DPCC table; details unverified.",
+    "lat": 28.7269,
+    "lng": 77.1952,
+    "capacityTPD": null,
+    "products": ["RCA coarse aggregate", "RCA fine aggregate", "Paver blocks"],
+    "productsNote": "[U]",
+    "source": "DPCC Annual Report FY 2023-24",
+    "sourceStatus": "U",
+    "lastChecked": "2026-10-09"
+  },
+  {
+    "facilityId": "fac-rani-khera",
+    "name": "Rani Khera (Mundka) C&D Waste Processing Plant",
+    "operator": "DPCC / MCD",
+    "status": "U",
+    "statusNote": "[U] DPCC writes this as 'Ranikhera (Mundka)' — Rani Khera and Mundka are one site per Spec §2. 'Mundka/DMRC' as a separate fifth plant is unverified and is NOT listed here.",
+    "lat": 28.6988,
+    "lng": 77.0267,
+    "capacityTPD": null,
+    "products": ["RCA coarse aggregate", "Paver blocks", "Kerb stones"],
+    "productsNote": "[U]",
+    "source": "DPCC Annual Report FY 2023-24",
+    "sourceStatus": "U",
+    "lastChecked": "2026-10-09"
+  },
+  {
+    "facilityId": "fac-okhla",
+    "name": "Okhla C&D Waste Processing Plant (planned)",
+    "operator": "MCD",
+    "status": "U",
+    "statusNote": "[U] Planned plant — operational status unverified. Do not show in facility distance estimates until confirmed operational.",
+    "lat": 28.5354,
+    "lng": 77.2747,
+    "capacityTPD": null,
+    "products": [],
+    "productsNote": "[U] Not operational — product list unknown",
+    "source": "DPCC Annual Report FY 2023-24 (planned facility reference)",
+    "sourceStatus": "U",
+    "lastChecked": "2026-10-09",
+    "operational": false
+  }
+]
